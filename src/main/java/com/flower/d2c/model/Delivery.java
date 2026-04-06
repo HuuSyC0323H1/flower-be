@@ -32,6 +32,6 @@ public class Delivery {
     private DeliveryStatus status;
 
     public enum DeliveryStatus {
-        PENDING, PROCESSING, SHIPPED, DELIVERED, SKIPPED
+        PENDING, PROCESSING, SHIPPED, DELIVERED, SKIPPED, CANCELLED
     }
 }

@@ -104,4 +104,38 @@ public class SubscriptionService {
 
         return deliveryRepository.save(replacementDelivery);
     }
+
+    /**
+     * Logic 3: Nâng cấp Gói Hoa (Upgrade).
+     * Thuật toán: Hủy các đợt giao chưa thực hiện của gói cũ và thay thế bằng gói mới.
+     */
+    @Transactional
+    public UserSubscription upgradeSubscription(Long userId, Long oldSubId, Long newPlanId) {
+        UserSubscription oldSubscription = userSubscriptionRepository.findById(oldSubId)
+                .orElseThrow(() -> new RuntimeException("Subscription not found"));
+
+        if (!oldSubscription.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Unauthorized upgrade request");
+        }
+
+        if (oldSubscription.getStatus() != UserSubscription.Status.ACTIVE) {
+            throw new RuntimeException("Chỉ có thể nâng cấp gói đang hoạt động.");
+        }
+
+        // 1. Đánh dấu gói cũ là đã được nâng cấp (UPGRADED)
+        oldSubscription.setStatus(UserSubscription.Status.UPGRADED);
+        userSubscriptionRepository.save(oldSubscription);
+
+        // 2. Hủy các đợt giao hóa chưa thực xử lý (PENDING) của gói cũ
+        List<Delivery> oldDeliveries = deliveryRepository.findByUserSubscriptionIdOrderByScheduledDateAsc(oldSubId);
+        for (Delivery d : oldDeliveries) {
+            if (d.getStatus() == Delivery.DeliveryStatus.PENDING) {
+                d.setStatus(Delivery.DeliveryStatus.CANCELLED);
+            }
+        }
+        deliveryRepository.saveAll(oldDeliveries);
+
+        // 3. Đăng ký gói mới cho User
+        return subscribeToPlan(userId, newPlanId);
+    }
 }

@@ -36,6 +36,6 @@ public class UserSubscription {
     private LocalDateTime nextDeliveryDate;
 
     public enum Status {
-        ACTIVE, PAUSED, CANCELLED, COMPLETED
+        ACTIVE, PAUSED, CANCELLED, COMPLETED, UPGRADED
     }
 }
