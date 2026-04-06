@@ -1,21 +1,21 @@
-package com.flower.d2c.controller;
+package com.flower.d2c.controller.controller.apipri;
 
 import com.flower.d2c.model.SubscriptionPlan;
 import com.flower.d2c.repository.SubscriptionPlanRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/packages")
-@CrossOrigin("*")
+@RequestMapping("/api/private/packages")
 @Tag(name = "Admin Subscription Packages", description = "Quản lý các Gói Hoa Định Kỳ.")
 public class SubscriptionPlanController {
 
-    @Autowired
+    @Resource
     private SubscriptionPlanRepository subscriptionPlanRepository;
 
     @GetMapping

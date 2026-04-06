@@ -1,28 +1,21 @@
 package com.flower.d2c.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "web2_blocks")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Web2Block {
+public class Web2Block extends BaseAuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
-    @Column(columnDefinition = "LONGTEXT")
-    private String icon; // For image, emoji or base64
-
-    private String description;
-
-    private String apiLink;
+    private String iconCode;
+    private String title;
+    private String apiEndpoint;
 }

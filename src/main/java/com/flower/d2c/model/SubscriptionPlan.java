@@ -1,19 +1,17 @@
 package com.flower.d2c.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "subscription_plans")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SubscriptionPlan {
+public class SubscriptionPlan extends BaseAuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +27,8 @@ public class SubscriptionPlan {
 
     private Integer deliveriesPerCycle; // e.g., 4 (4 weeks)
 
-    private String frequency; // e.g., "WEEKLY"
+    @Enumerated(EnumType.STRING)
+    private PlanFrequency frequency; // WEEKLY, BI_WEEKLY, MONTHLY
 
     private String imageUrl;
 
@@ -37,4 +36,10 @@ public class SubscriptionPlan {
     private String features; // Rich text HTML features
 
     private String checkoutLink; // Zalo link
+
+    public enum PlanFrequency {
+        WEEKLY,
+        BI_WEEKLY,
+        MONTHLY
+    }
 }

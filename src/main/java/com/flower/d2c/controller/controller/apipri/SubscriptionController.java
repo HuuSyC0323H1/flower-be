@@ -1,21 +1,21 @@
-package com.flower.d2c.controller;
+package com.flower.d2c.controller.controller.apipri;
 
 import com.flower.d2c.model.Delivery;
 import com.flower.d2c.model.UserSubscription;
 import com.flower.d2c.service.SubscriptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/subscription")
-@RequiredArgsConstructor
+@RequestMapping("/api/private/subscription")
 @Tag(name = "Customer Subscriptions", description = "Quản lý lượt đăng ký và lịch giao hoa của khách hàng.")
 public class SubscriptionController {
 
-    private final SubscriptionService subscriptionService;
+    @Resource
+    private SubscriptionService subscriptionService;
 
     @PostMapping("/subscribe")
     @Operation(summary = "Đăng ký gói mới", description = "Khách hàng bắt đầu một chu kỳ đăng ký gói hoa định kỳ.")

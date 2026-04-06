@@ -1,19 +1,16 @@
 package com.flower.d2c.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Table(name = "notifications")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Notification {
+public class Notification extends BaseAuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,12 +30,11 @@ public class Notification {
     @Enumerated(EnumType.STRING)
     private NotificationType type;
 
-    private LocalDateTime createdAt;
-
     @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        isRead = false;
+    protected void onPrePersist() {
+        if (!isRead) {
+            isRead = false;
+        }
     }
 
     public enum NotificationType {

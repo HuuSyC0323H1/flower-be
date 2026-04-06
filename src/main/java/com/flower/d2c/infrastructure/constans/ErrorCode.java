@@ -1,4 +1,4 @@
-package com.flower.d2c.config.constans;
+package com.flower.d2c.infrastructure.constans;
 
 import java.io.Serializable;
 

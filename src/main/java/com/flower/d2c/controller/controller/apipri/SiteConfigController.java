@@ -1,4 +1,4 @@
-package com.flower.d2c.controller;
+package com.flower.d2c.controller.controller.apipri;
 
 import com.flower.d2c.controller.view.ResponseObject;
 import com.flower.d2c.model.SiteConfig;
@@ -10,8 +10,7 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin/config/site")
-@CrossOrigin("*")
+@RequestMapping("/api/private/config")
 @Tag(name = "Admin Site Config", description = "Quản lý cấu hình chung của website.")
 public class SiteConfigController {
 
@@ -20,7 +19,7 @@ public class SiteConfigController {
     @Resource
     private SiteConfigService siteConfigService;
 
-    @GetMapping
+    @GetMapping("/site")
     @Operation(summary = "Xem cấu hình Admin", description = "Truy lục bản ghi cấu hình duy nhất dùng để biên tập trên trang quản trị.")
     public ResponseObject getConfig() {
         return new ResponseObject(siteConfigService.getSiteConfig());

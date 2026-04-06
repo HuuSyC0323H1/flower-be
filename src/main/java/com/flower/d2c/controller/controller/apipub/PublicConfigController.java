@@ -1,4 +1,4 @@
-package com.flower.d2c.controller;
+package com.flower.d2c.controller.controller.apipub;
 
 import com.flower.d2c.model.Product;
 import com.flower.d2c.model.SiteConfig;
@@ -10,31 +10,33 @@ import com.flower.d2c.repository.SubscriptionPlanRepository;
 import com.flower.d2c.repository.Web2BlockRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public")
-@CrossOrigin("*")
+@RequestMapping("/api/public/config")
 @Tag(name = "Public API", description = "Endpoints cho khách hàng và trang landing page")
 public class PublicConfigController {
 
-    @Autowired
+    @Resource
     private SiteConfigRepository siteConfigRepository;
 
-    @Autowired
+    @Resource
     private SubscriptionPlanRepository subscriptionPlanRepository;
 
-    @Autowired
+    @Resource
     private Web2BlockRepository web2BlockRepository;
 
-    @Autowired
+    @Resource
     private ProductRepository productRepository;
 
-    @GetMapping("/config/site")
+    @GetMapping("/site")
     @Operation(summary = "Lấy cấu hình trang chủ", description = "Trả về thông tin branding, slogan và banner chính của Website.")
     public ResponseEntity<SiteConfig> getSiteConfig() {
         return siteConfigRepository.findById(1L)

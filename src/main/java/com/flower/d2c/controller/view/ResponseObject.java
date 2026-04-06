@@ -2,7 +2,7 @@ package com.flower.d2c.controller.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.flower.d2c.config.constans.ErrorCode;
+import com.flower.d2c.infrastructure.constans.ErrorCode;
 import lombok.Getter;
 import lombok.Setter;
 

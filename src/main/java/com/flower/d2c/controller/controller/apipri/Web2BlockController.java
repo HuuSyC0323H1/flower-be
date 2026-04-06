@@ -1,21 +1,21 @@
-package com.flower.d2c.controller;
+package com.flower.d2c.controller.controller.apipri;
 
 import com.flower.d2c.model.Web2Block;
 import com.flower.d2c.repository.Web2BlockRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/blocks")
-@CrossOrigin("*")
+@RequestMapping("/api/private/blocks")
 @Tag(name = "Admin Web2 Blocks", description = "Quản lý các khối Heading động cho trang vệ tinh.")
 public class Web2BlockController {
 
-    @Autowired
+    @Resource
     private Web2BlockRepository web2BlockRepository;
 
     @GetMapping
