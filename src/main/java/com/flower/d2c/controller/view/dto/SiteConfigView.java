@@ -1,4 +1,4 @@
-package com.flower.d2c.controller.view;
+package com.flower.d2c.controller.view.dto;
 
 import com.flower.d2c.model.Product;
 import com.flower.d2c.model.SubscriptionPlan;

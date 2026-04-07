@@ -1,12 +1,10 @@
 package com.flower.d2c.controller.controller.apipri;
 
-import com.flower.d2c.model.Delivery;
-import com.flower.d2c.model.UserSubscription;
+import com.flower.d2c.controller.view.ResponseObject;
 import com.flower.d2c.service.SubscriptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,18 +17,16 @@ public class SubscriptionController {
 
     @PostMapping("/subscribe")
     @Operation(summary = "Đăng ký gói mới", description = "Khách hàng bắt đầu một chu kỳ đăng ký gói hoa định kỳ.")
-    public ResponseEntity<UserSubscription> subscribe(
+    public ResponseObject subscribe(
             @RequestParam Long userId, 
             @RequestParam Long planId) {
         
-        UserSubscription subscription = subscriptionService.subscribeToPlan(userId, planId);
-        return ResponseEntity.ok(subscription);
+        return new ResponseObject(subscriptionService.subscribeToPlan(userId, planId));
     }
 
     @PostMapping("/delivery/{deliveryId}/pause")
     @Operation(summary = "Tạm dừng giao hàng", description = "Dùng trong trường hợp khách bận, muốn dời lịch giao hoa sang tuần kế tiếp.")
-    public ResponseEntity<Delivery> pauseDelivery(@PathVariable Long deliveryId) {
-        Delivery replacement = subscriptionService.pauseDelivery(deliveryId);
-        return ResponseEntity.ok(replacement);
+    public ResponseObject pauseDelivery(@PathVariable Long deliveryId) {
+        return new ResponseObject(subscriptionService.pauseDelivery(deliveryId));
     }
 }

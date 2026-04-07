@@ -1,6 +1,8 @@
 package com.flower.d2c.service.impl;
 
-import com.flower.d2c.controller.view.SiteConfigView;
+import com.flower.d2c.controller.form.SiteConfigForm;
+import com.flower.d2c.controller.view.dto.SiteConfigView;
+import com.flower.d2c.infrastructure.mapper.SiteConfigMapper;
 import com.flower.d2c.model.Product;
 import com.flower.d2c.model.SiteConfig;
 import com.flower.d2c.model.SubscriptionPlan;
@@ -25,6 +27,9 @@ public class SiteConfigServiceImpl implements SiteConfigService {
     private ProductRepository productRepository;
     @Resource
     private SubscriptionPlanRepository subscriptionPlanRepository;
+
+    @Resource
+    private SiteConfigMapper siteConfigMapper;
 
     @Override
     public SiteConfigView getSiteConfig() {
@@ -51,5 +56,25 @@ public class SiteConfigServiceImpl implements SiteConfigService {
                 .products(products)
                 .subscriptionPlans(subscriptionPlans)
                 .build();
+    }
+
+    @Override
+    public Boolean updateConfig(SiteConfigForm config) {
+        SiteConfig siteConfig = siteConfigRepository.findById(config.getId()).orElse(null);
+        if (siteConfig == null) {
+            return false;
+        }
+        List<Product> products = productRepository.findAllById(config.getProductIds());
+        if (products.isEmpty() || products.size() != config.getProductIds().size()) {
+            return false;
+        }
+
+        List<SubscriptionPlan> subscriptionPlans = subscriptionPlanRepository.findAllById(config.getSubscriptionPlanIds());
+        if (subscriptionPlans.isEmpty() || subscriptionPlans.size() != config.getSubscriptionPlanIds().size()) {
+            return false;
+        }
+        siteConfigMapper.updateFromForm(config, siteConfig);
+        siteConfigRepository.save(siteConfig);
+        return true;
     }
 }
